@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import "../../style/UserHeader/userHeader.css"
 import { useSelector, useDispatch } from 'react-redux'
 import { selectUserInfo, selectEditInfo } from '../../utils/selectors';
@@ -16,9 +15,9 @@ function UserHeader() {
 
   return (
     <div className="header">
-        {editInfo.edit === true ? <h1>Edit user info</h1> : <h1>Welcome back<br />{firstName} {lastName}!</h1>}
-        {editInfo.edit === true ? null : <button className="edit-button" onClick={()=> dispatch(toggleEdit())}>Edit Name</button>}
-        {editInfo.edit === true ?<FormEditInfo /> : null}
+        {editInfo.open === true ? <h1>Edit user info</h1> : <h1>Welcome back<br />{firstName} {lastName}!</h1>}
+        {editInfo.open === true ? null : <button className="edit-button" onClick={()=> dispatch(toggleEdit())}>Edit Name</button>}
+        {editInfo.open === true ?<FormEditInfo /> : null}
       </div>
   )
 }
