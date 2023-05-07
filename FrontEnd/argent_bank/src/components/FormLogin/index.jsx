@@ -18,7 +18,6 @@ function FormLogin() {
   const log = useSelector(selectLog)
   const userInfo = useSelector(selectUserInfo)
 
-  
 
   const signIn = async() => {
     const logResponse = await fetch ('http://localhost:3001/api/v1/user/login',{
@@ -50,7 +49,7 @@ function FormLogin() {
     }),
   });
   const userInfoData = await userInfoResponse.json();
-  console.log(userInfoData.body)
+  //console.log(userInfoData.body)
   dispatch(saveUserInfo(userInfoData.body))
 
   }
@@ -75,16 +74,10 @@ function FormLogin() {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-
     signIn()
-    // console.log(log.token)
-    // getUserInfo(log.token)
-     //console.log(userInfo)
     setUserName("")
     setPassword("")
   }
-
-
 
   return (
     <form type="submit" onSubmit={handleSubmit}>
