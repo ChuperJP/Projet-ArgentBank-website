@@ -1,22 +1,16 @@
 import React from 'react'
 import "../../style/FormLogin/formLogin.css"
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logIn } from '../../features/log';
 import { saveUserInfo } from '../../features/userInfo';
-import { selectLog, selectUserInfo } from '../../utils/selectors';
-
-
-
-
 
 function FormLogin() {
 
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
-  const log = useSelector(selectLog)
-  const userInfo = useSelector(selectUserInfo)
+
 
 
   const signIn = async() => {
@@ -34,47 +28,52 @@ function FormLogin() {
   const logData = await logResponse.json();
   
   dispatch(logIn(logData.body.token))
+
+  return logData.body.token
   //console.log(logData.body.token)
   //alert(logData.message)
   
 
-  const userInfoResponse = await fetch ('http://localhost:3001/api/v1/user/profile',{
-    method: 'POST',
-    headers: {
-      'accept': 'application/json',
-      'Authorization': "Bearer " + logData.body.token
-    },
-    body: JSON.stringify({
-     
-    }),
-  });
-  const userInfoData = await userInfoResponse.json();
-  //console.log(userInfoData.body)
-  dispatch(saveUserInfo(userInfoData.body))
-
-  }
-
-  // const getUserInfo = async() => {
-  //   const userInfoResponse = await fetch ('http://localhost:3001/api/v1/user/profile',{
+  // const userInfoResponse = await fetch ('http://localhost:3001/api/v1/user/profile',{
   //   method: 'POST',
   //   headers: {
   //     'accept': 'application/json',
-  //     'Authorization': "Bearer " + log.token
+  //     'Authorization': "Bearer " + logData.body.token
   //   },
   //   body: JSON.stringify({
      
   //   }),
   // });
   // const userInfoData = await userInfoResponse.json();
-  // console.log(userInfoData)
-  // dispatch(saveUserInfo(userInfoData))
-  // //console.log(userInfo)
-  // }
+  // //console.log(userInfoData.body)
+  // dispatch(saveUserInfo(userInfoData.body))
+
+  }
+
+  const getUserInfo = async(token) => {
+    const userInfoResponse = await fetch ('http://localhost:3001/api/v1/user/profile',{
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Authorization': "Bearer " + token
+    },
+    body: JSON.stringify({
+     
+    }),
+  });
+  const userInfoData = await userInfoResponse.json();
+  dispatch(saveUserInfo(userInfoData.body))
+  
+  }
 
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    signIn()
+    // signIn().then((response) => {
+    //   getUserInfo(response).then()
+    // })
+    const response = await signIn()
+    await getUserInfo(response)
     setUserName("")
     setPassword("")
   }

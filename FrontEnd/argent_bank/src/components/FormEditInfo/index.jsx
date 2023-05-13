@@ -2,7 +2,7 @@ import React from 'react'
  import '../../style/FormEditInfo/formEditInfo.css'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectUserInfo, selectEditInfo, selectLog } from '../../utils/selectors';
+import { selectUserInfo, selectLog } from '../../utils/selectors';
 import { changeUserName } from '../../features/userInfo.js'
 import { toggleEdit } from '../../features/editInfo.js'
 
@@ -11,7 +11,6 @@ function FormEditInfo() {
     const dispatch = useDispatch()
     const log = useSelector(selectLog)
     const userInfo = useSelector(selectUserInfo)
-    const EditInfo = useSelector(selectEditInfo)
     const firstName = userInfo.firstName
     const lastName = userInfo.lastName
 
@@ -29,7 +28,6 @@ function FormEditInfo() {
           }),
         });
         const editData = await logResponse.json();
-        console.log(editData)
         dispatch(changeUserName(editData.body.userName))
     }
 

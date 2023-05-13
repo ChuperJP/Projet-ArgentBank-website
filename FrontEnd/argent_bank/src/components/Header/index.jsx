@@ -1,11 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import "../../style/Header/header.css"
-import LogoBank from "../../assets/argentBankLogo.png"
+import LogoBank from "../../assets/argentBankLogo.webp"
 import { useDispatch, useSelector } from "react-redux"
-import { selectLog, selectUserInfo } from '../../utils/selectors';
+import { selectLog, selectUserInfo, selectEditInfo } from '../../utils/selectors';
 import { logOut } from '../../features/log';
 import { removeUserInfo } from '../../features/userInfo'
+import { toggleEdit } from "../../features/editInfo"
 
 
 
@@ -16,6 +17,7 @@ function Header() {
   const dispatch = useDispatch()
   const log = useSelector(selectLog)
   const userInfo = useSelector(selectUserInfo)
+  const editInfo = useSelector(selectEditInfo)
   const pseudo = userInfo.userName
 
   const isConnected = () => {
@@ -28,6 +30,9 @@ function Header() {
 
   const signOut = () =>{
     dispatch(removeUserInfo())
+    if(editInfo.open === true){
+      dispatch(toggleEdit())
+    }
     dispatch(logOut())
   }
 
@@ -35,8 +40,6 @@ function Header() {
     signOut()
   }
   
- console.log(isConnected())
- console.log(userInfo.userName)
  
   return (
     <nav className="main-nav">
