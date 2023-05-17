@@ -10,7 +10,7 @@ import { createBrowserRouter} from "react-router-dom";
      {
          element: <App />,
          children: [
-           { path: "/home", element: <Home /> },
+           { path: "/", element: <Home /> },
            {
              element: <SignIn />,
              path:"/sign-in",

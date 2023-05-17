@@ -43,7 +43,7 @@ function Header() {
  
   return (
     <nav className="main-nav">
-      <NavLink className="main-nav-logo" to="/home">
+      <NavLink className="main-nav-logo" to="/">
         <img
           className="main-nav-logo-image"
           src={LogoBank}
@@ -65,7 +65,7 @@ function Header() {
           </NavLink> 
         }
         { isConnected() === false ? null :
-          <NavLink className="main-nav-item" to="/home" onClick={handleClick}>
+          <NavLink className="main-nav-item" to="/" onClick={handleClick}>
           <i className="fa fa-sign-out"></i>
           Sign Out
           </NavLink> 
