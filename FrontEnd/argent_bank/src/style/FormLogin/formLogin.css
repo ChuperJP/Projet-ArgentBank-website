@@ -25,6 +25,12 @@
     text-align: left;
     margin-bottom: 1rem;
   }
+
+  .errorMessage {    
+    color: red;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    margin-top: 0;
+  }
   
   .input-wrapper label {
     font-weight: bold;
