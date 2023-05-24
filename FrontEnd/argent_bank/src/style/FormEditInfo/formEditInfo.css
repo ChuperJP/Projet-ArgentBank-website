@@ -6,7 +6,17 @@
     padding: 2rem;
   }
   
-  
+  .EditSucceededMessage{
+    color: #00bc77;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    margin-top: 0;
+  }
+  .EditErrorMessage{
+    color: red;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    margin-top: 0;
+  }
+
   .sign-in-button {
     display: block;
     width: 100%;

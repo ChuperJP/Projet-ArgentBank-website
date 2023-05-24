@@ -8,6 +8,8 @@ import { toggleEdit } from "../../features/editInfo.js";
 
 function FormEditInfo() {
   const [userName, setUserName] = useState("");
+  const [editSucceeded, setEditSucceeded] = useState(false);
+  const [editError, setEditError] = useState(false);
   const dispatch = useDispatch();
   const log = useSelector(selectLog);
   const userInfo = useSelector(selectUserInfo);
@@ -30,13 +32,24 @@ function FormEditInfo() {
       }
     );
     const editData = await logResponse.json();
+    console.log(editData);
     dispatch(changeUserName(editData.body.userName));
+    if (editData.status === 200) {
+      setEditSucceeded(true);
+    }
   };
 
   const handleSubmit = async (e) => {
+    const regEx = /^[0-9A-Za-z\s\-]+$/;
     e.preventDefault();
-    editPost();
-    setUserName("");
+    setEditSucceeded(false);
+    if (regEx.test(userName)) {
+      editPost();
+      setEditError(false);
+      setUserName("");
+    } else {
+      setEditError(true);
+    }
   };
   const handleClick = async (e) => {
     e.preventDefault();
@@ -44,8 +57,27 @@ function FormEditInfo() {
     setUserName("");
   };
 
+  const EditSucceededMessage = () => {
+    if (editSucceeded)
+      return (
+        <p className="EditSucceededMessage">
+          Votre nom d'utilisateur a bien été modifié.
+        </p>
+      );
+  };
+  const EditErrorMessage = () => {
+    if (editError)
+      return (
+        <p className="EditErrorMessage">
+          Votre nom d'utilisateur ne peux contenir de signe spécifique.
+        </p>
+      );
+  };
+
   return (
     <div className="editForm_wrapper">
+      {EditSucceededMessage()}
+      {EditErrorMessage()}
       <form type="submit" onSubmit={handleSubmit}>
         <div className="editInfo_input-wrapper">
           <label htmlFor="username">User name:</label>
